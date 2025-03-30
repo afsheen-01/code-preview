@@ -14,34 +14,45 @@
   "contributes": {
     "commands": [
       {
-        "command": "code-preview.helloWorld",
-        "title": "Hello World"
+        "command": "extension.previewReact",
+        "title": "Preview React Component"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "resourceExtname =~ /\\.(jsx|tsx|js|ts)$/",
+          "command": "extension.previewReact",
+          "group": "navigation"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "extension.previewReact",
+        "key": "ctrl+shift+p",
+        "mac": "cmd+shift+p",
+        "when": "editorTextFocus && (resourceExtname =~ /\\.(jsx|tsx|js|ts)$/)"
       }
     ]
   },
   "scripts": {
-    "vscode:prepublish": "npm run package",
-    "compile": "webpack",
-    "watch": "webpack --watch",
-    "package": "webpack --mode production --devtool hidden-source-map",
-    "compile-tests": "tsc -p . --outDir out",
-    "watch-tests": "tsc -p . -w --outDir out",
-    "pretest": "npm run compile-tests && npm run compile && npm run lint",
-    "lint": "eslint src",
-    "test": "vscode-test"
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/vscode": "^1.98.0",
-    "@types/mocha": "^10.0.10",
-    "@types/node": "20.x",
-    "@typescript-eslint/eslint-plugin": "^8.28.0",
-    "@typescript-eslint/parser": "^8.28.0",
-    "eslint": "^9.23.0",
-    "typescript": "^5.8.2",
-    "ts-loader": "^9.5.2",
-    "webpack": "^5.98.0",
-    "webpack-cli": "^6.0.1",
-    "@vscode/test-cli": "^0.0.10",
-    "@vscode/test-electron": "^2.4.1"
+    "@types/vscode": "^1.60.0",
+    "@types/glob": "^7.1.3",
+    "@types/node": "^14.0.27",
+    "eslint": "^7.9.0",
+    "@typescript-eslint/eslint-plugin": "^4.1.1",
+    "@typescript-eslint/parser": "^4.1.1",
+    "glob": "^7.1.6",
+    "typescript": "^4.0.2",
+    "vscode-test": "^1.4.0"
   }
 }
